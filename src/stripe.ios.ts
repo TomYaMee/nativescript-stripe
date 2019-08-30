@@ -41,14 +41,7 @@ export class Stripe {
     if (card.expMonth) cardParams.expMonth = card.expMonth;
     if (card.expYear) cardParams.expYear = card.expYear;
     if (card.number) cardParams.number = card.number;
-    const billing = STPPaymentMethodBillingDetails.new();
-    if (card.addressLine1) billing.address.line1 = card.addressLine1;
-    if (card.addressLine2) billing.address.line2 = card.addressLine2;
-    if (card.addressCity) billing.address.city = card.addressCity;
-    if (card.addressState) billing.address.state = card.addressState;
-    if (card.addressZip) billing.address.postalCode = card.addressZip;
-    if (card.addressCountry) billing.address.country = card.addressCountry;
-    const params = STPPaymentMethodParams.paramsWithCardBillingDetailsMetadata(cardParams, billing, null);
+    const params = STPPaymentMethodParams.paramsWithCardBillingDetailsMetadata(cardParams, null, null);
     apiClient.createPaymentMethodWithParamsCompletion(
       params,
       callback(cb, (pm) => PaymentMethod.fromNative(pm))
